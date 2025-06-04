@@ -161,6 +161,7 @@
             top: 1rem;
             right: 1rem;
             padding: 0.5rem;
+            z-index: 10; /* Ensure it's above other content */
         }
     </style>
 </head>
@@ -168,160 +169,160 @@
 
     <!-- Settings Placeholder -->
     <div class="settings-bar">
-        <select id="languageSetting" name="languageSetting" class="p-2 border border-gray-300 rounded-md text-sm">
+        <select id="languageSetting" name="languageSetting" class="p-2 border border-gray-300 rounded-md text-sm bg-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
             <option value="en">English</option>
-            <option value="es" disabled>Español (Coming Soon)</option>
-            <option value="fr" disabled>Français (Coming Soon)</option>
+            <option value="fa">فارسی (Persian)</option>
+            <!-- Add more languages here as needed -->
         </select>
     </div>
 
     <div class="w-full max-w-3xl bg-white p-6 sm:p-10 rounded-xl shadow-2xl">
         <header class="mb-10 text-center">
-            <h1 class="text-4xl sm:text-5xl font-bold text-gray-800">AI Fitness Planner</h1>
-            <p class="text-gray-600 mt-3 text-lg">Your Personalized Workout Journey Starts Here</p>
+            <h1 class="text-4xl sm:text-5xl font-bold text-gray-800" data-translate-key="appTitle">AI Fitness Planner</h1>
+            <p class="text-gray-600 mt-3 text-lg" data-translate-key="appSubtitle">Your Personalized Workout Journey Starts Here</p>
         </header>
 
         <!-- API Key Input -->
         <div class="mb-8 p-4 border border-amber-400 bg-amber-50 rounded-lg shadow-sm">
-            <label for="apiKey" class="block text-sm font-medium text-amber-700 mb-1">Gemini API Key (Optional)</label>
-            <input type="text" id="apiKey" name="apiKey" class="w-full p-2 border border-amber-500 rounded-md shadow-sm placeholder-amber-400" placeholder="Enter your Gemini API Key if using models other than gemini-2.0-flash">
-            <p class="text-xs text-amber-600 mt-1">For `gemini-2.0-flash`, the key is often handled by the environment. Provide if you intend to switch models or if prompted.</p>
+            <label for="apiKey" class="block text-sm font-medium text-amber-700 mb-1" data-translate-key="apiKeyLabel">Gemini API Key (Optional)</label>
+            <input type="text" id="apiKey" name="apiKey" class="w-full p-2 border border-amber-500 rounded-md shadow-sm placeholder-amber-400" placeholder="Enter your Gemini API Key if using models other than gemini-2.0-flash" data-translate-key="apiKeyPlaceholder">
+            <p class="text-xs text-amber-600 mt-1" data-translate-key="apiKeyNote">For `gemini-2.0-flash`, the key is often handled by the environment. Provide if you intend to switch models or if prompted.</p>
         </div>
 
         <!-- Form Section -->
         <form id="fitnessForm" class="space-y-8">
             <div class="form-section">
-                <h2 class="border-b-0"><span class="step-icon">👤</span>Step 1: Basic Information</h2>
+                <h2 class="border-b-0"><span class="step-icon">👤</span><span data-translate-key="step1Title">Step 1: Basic Information</span></h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mt-4">
                     <div>
-                        <label for="age">Age (10-99):</label>
+                        <label for="age" data-translate-key="ageLabel">Age (10-99):</label>
                         <input type="number" id="age" name="age" min="10" max="99" required class="mt-1">
                     </div>
                     <div>
-                        <label for="gender">Gender:</label>
+                        <label for="gender" data-translate-key="genderLabel">Gender:</label>
                         <select id="gender" name="gender" required class="mt-1">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other/Prefer not to say</option>
+                            <option value="Male" data-translate-key="genderMale">Male</option>
+                            <option value="Female" data-translate-key="genderFemale">Female</option>
+                            <option value="Other" data-translate-key="genderOther">Other/Prefer not to say</option>
                         </select>
                     </div>
                     <div>
-                        <label for="height">Height (cm, 100-250):</label>
+                        <label for="height" data-translate-key="heightLabel">Height (cm, 100-250):</label>
                         <input type="number" id="height" name="height" min="100" max="250" required class="mt-1">
                     </div>
                     <div>
-                        <label for="weight">Weight (kg, 30-200):</label>
+                        <label for="weight" data-translate-key="weightLabel">Weight (kg, 30-200):</label>
                         <input type="number" id="weight" name="weight" min="30" max="200" required class="mt-1">
                     </div>
                      <div>
-                        <label for="activityLevel">Activity Level (Daily):</label>
+                        <label for="activityLevel" data-translate-key="activityLevelLabel">Activity Level (Daily):</label>
                         <select id="activityLevel" name="activityLevel" required class="mt-1">
-                            <option value="Sedentary">Sedentary (little or no exercise)</option>
-                            <option value="Lightly Active">Lightly Active (light exercise/sports 1-3 days/week)</option>
-                            <option value="Moderately Active">Moderately Active (moderate exercise/sports 3-5 days/week)</option>
-                            <option value="Very Active">Very Active (hard exercise/sports 6-7 days a week)</option>
-                            <option value="Extra Active">Extra Active (very hard exercise/sports & physical job)</option>
+                            <option value="Sedentary" data-translate-key="activitySedentary">Sedentary (little or no exercise)</option>
+                            <option value="Lightly Active" data-translate-key="activityLightly">Lightly Active (light exercise/sports 1-3 days/week)</option>
+                            <option value="Moderately Active" data-translate-key="activityModerately">Moderately Active (moderate exercise/sports 3-5 days/week)</option>
+                            <option value="Very Active" data-translate-key="activityVery">Very Active (hard exercise/sports 6-7 days a week)</option>
+                            <option value="Extra Active" data-translate-key="activityExtra">Extra Active (very hard exercise/sports & physical job)</option>
                         </select>
                     </div>
                 </div>
             </div>
 
             <div class="form-section">
-                <h2 class="border-b-0"><span class="step-icon">🎯</span>Step 2: Goals & General Preferences</h2>
+                <h2 class="border-b-0"><span class="step-icon">🎯</span><span data-translate-key="step2Title">Step 2: Goals & General Preferences</span></h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mt-4">
                     <div>
-                        <label for="goal">Primary Goal:</label>
+                        <label for="goal" data-translate-key="goalLabel">Primary Goal:</label>
                         <select id="goal" name="goal" required class="mt-1">
-                            <option value="Fat Loss">Fat Loss</option>
-                            <option value="Muscle Gain">Muscle Gain</option>
-                            <option value="Endurance">Endurance Improvement</option>
-                            <option value="Flexibility">Flexibility & Mobility</option>
-                            <option value="General Health">General Health & Fitness</option>
+                            <option value="Fat Loss" data-translate-key="goalFatLoss">Fat Loss</option>
+                            <option value="Muscle Gain" data-translate-key="goalMuscleGain">Muscle Gain</option>
+                            <option value="Endurance" data-translate-key="goalEndurance">Endurance Improvement</option>
+                            <option value="Flexibility" data-translate-key="goalFlexibility">Flexibility & Mobility</option>
+                            <option value="General Health" data-translate-key="goalGeneralHealth">General Health & Fitness</option>
                         </select>
                     </div>
                      <div>
-                        <label for="timeframe">Timeframe for Goal (e.g., 4 weeks, 3 months):</label>
-                        <input type="text" id="timeframe" name="timeframe" placeholder="e.g., 8 weeks" required class="mt-1">
+                        <label for="timeframe" data-translate-key="timeframeLabel">Timeframe for Goal (e.g., 4 weeks, 3 months):</label>
+                        <input type="text" id="timeframe" name="timeframe" placeholder="e.g., 8 weeks" required class="mt-1" data-translate-key="timeframePlaceholder">
                     </div>
                     <div>
-                        <label for="experienceLevel">Exercise Experience Level:</label>
+                        <label for="experienceLevel" data-translate-key="experienceLabel">Exercise Experience Level:</label>
                         <select id="experienceLevel" name="experienceLevel" required class="mt-1">
-                            <option value="Beginner">Beginner (New to exercise or returning after a long break)</option>
-                            <option value="Intermediate">Intermediate (Consistent exercise for 6+ months)</option>
-                            <option value="Advanced">Advanced (Consistent, structured training for 1+ year)</option>
+                            <option value="Beginner" data-translate-key="expBeginner">Beginner (New to exercise or returning after a long break)</option>
+                            <option value="Intermediate" data-translate-key="expIntermediate">Intermediate (Consistent exercise for 6+ months)</option>
+                            <option value="Advanced" data-translate-key="expAdvanced">Advanced (Consistent, structured training for 1+ year)</option>
                         </select>
                     </div>
                     <div>
-                        <label for="daysPerWeek">Workout Days Per Week (1-7):</label>
+                        <label for="daysPerWeek" data-translate-key="daysPerWeekLabel">Workout Days Per Week (1-7):</label>
                         <input type="number" id="daysPerWeek" name="daysPerWeek" min="1" max="7" required class="mt-1">
                     </div>
                     <div>
-                        <label for="sessionDuration">Max Duration Per Session (minutes, 20-120):</label>
+                        <label for="sessionDuration" data-translate-key="sessionDurationLabel">Max Duration Per Session (minutes, 20-120):</label>
                         <input type="number" id="sessionDuration" name="sessionDuration" min="20" max="120" step="5" required class="mt-1">
                     </div>
                     <div>
-                        <label for="equipment">Equipment Availability:</label>
+                        <label for="equipment" data-translate-key="equipmentLabel">Equipment Availability:</label>
                         <select id="equipment" name="equipment" required class="mt-1">
-                            <option value="None">None (Bodyweight only)</option>
-                            <option value="Basic">Basic (Dumbbells, Resistance Bands)</option>
-                            <option value="Full Gym">Full Gym Access</option>
+                            <option value="None" data-translate-key="equipNone">None (Bodyweight only)</option>
+                            <option value="Basic" data-translate-key="equipBasic">Basic (Dumbbells, Resistance Bands)</option>
+                            <option value="Full Gym" data-translate-key="equipFullGym">Full Gym Access</option>
                         </select>
                     </div>
                 </div>
             </div>
 
             <div class="form-section">
-                <h2 class="border-b-0"><span class="step-icon">⚙️</span>Step 3: Advanced Customization</h2>
+                <h2 class="border-b-0"><span class="step-icon">⚙️</span><span data-translate-key="step3Title">Step 3: Advanced Customization</span></h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6 mt-4">
                     <div>
-                        <label>Preferred Exercise Types:</label>
+                        <label data-translate-key="preferredTypesLabel">Preferred Exercise Types:</label>
                         <div class="mt-2 space-y-2 checkbox-group">
-                            <div class="checkbox-item"><input type="checkbox" id="typeCardio" name="preferredTypes" value="Cardio"><label for="typeCardio">Cardio (Running, Cycling, etc.)</label></div>
-                            <div class="checkbox-item"><input type="checkbox" id="typeStrength" name="preferredTypes" value="Strength Training"><label for="typeStrength">Strength Training (Weights)</label></div>
-                            <div class="checkbox-item"><input type="checkbox" id="typeBodyweight" name="preferredTypes" value="Bodyweight"><label for="typeBodyweight">Bodyweight Exercises</label></div>
-                            <div class="checkbox-item"><input type="checkbox" id="typeYogaPilates" name="preferredTypes" value="Yoga/Pilates"><label for="typeYogaPilates">Yoga / Pilates</label></div>
-                            <div class="checkbox-item"><input type="checkbox" id="typeHIIT" name="preferredTypes" value="HIIT"><label for="typeHIIT">HIIT (High-Intensity Interval Training)</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="typeCardio" name="preferredTypes" value="Cardio"><label for="typeCardio" data-translate-key="typeCardio">Cardio (Running, Cycling, etc.)</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="typeStrength" name="preferredTypes" value="Strength Training"><label for="typeStrength" data-translate-key="typeStrength">Strength Training (Weights)</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="typeBodyweight" name="preferredTypes" value="Bodyweight"><label for="typeBodyweight" data-translate-key="typeBodyweight">Bodyweight Exercises</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="typeYogaPilates" name="preferredTypes" value="Yoga/Pilates"><label for="typeYogaPilates" data-translate-key="typeYogaPilates">Yoga / Pilates</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="typeHIIT" name="preferredTypes" value="HIIT"><label for="typeHIIT" data-translate-key="typeHIIT">HIIT (High-Intensity Interval Training)</label></div>
                         </div>
                     </div>
                     <div>
-                        <label>Focus Areas (Optional):</label>
+                        <label data-translate-key="focusAreasLabel">Focus Areas (Optional):</label>
                         <div class="mt-2 space-y-2 checkbox-group">
-                            <div class="checkbox-item"><input type="checkbox" id="focusUpper" name="focusAreas" value="Upper Body"><label for="focusUpper">Upper Body</label></div>
-                            <div class="checkbox-item"><input type="checkbox" id="focusLower" name="focusAreas" value="Lower Body"><label for="focusLower">Lower Body</label></div>
-                            <div class="checkbox-item"><input type="checkbox" id="focusCore" name="focusAreas" value="Core"><label for="focusCore">Core Strength</label></div>
-                            <div class="checkbox-item"><input type="checkbox" id="focusFlexibility" name="focusAreas" value="Flexibility/Mobility"><label for="focusFlexibility">Flexibility / Mobility</label></div>
-                            <div class="checkbox-item"><input type="checkbox" id="focusBalance" name="focusAreas" value="Balance"><label for="focusBalance">Balance</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="focusUpper" name="focusAreas" value="Upper Body"><label for="focusUpper" data-translate-key="focusUpper">Upper Body</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="focusLower" name="focusAreas" value="Lower Body"><label for="focusLower" data-translate-key="focusLower">Lower Body</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="focusCore" name="focusAreas" value="Core"><label for="focusCore" data-translate-key="focusCore">Core Strength</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="focusFlexibility" name="focusAreas" value="Flexibility/Mobility"><label for="focusFlexibility" data-translate-key="focusFlexibility">Flexibility / Mobility</label></div>
+                            <div class="checkbox-item"><input type="checkbox" id="focusBalance" name="focusAreas" value="Balance"><label for="focusBalance" data-translate-key="focusBalance">Balance</label></div>
                         </div>
                     </div>
                 </div>
                 <div class="mt-6">
-                    <label for="limitations">Physical Limitations or Injuries (if any):</label>
-                    <textarea id="limitations" name="limitations" placeholder="e.g., sensitive knees, past shoulder injury. Be specific." class="mt-1"></textarea>
+                    <label for="limitations" data-translate-key="limitationsLabel">Physical Limitations or Injuries (if any):</label>
+                    <textarea id="limitations" name="limitations" placeholder="e.g., sensitive knees, past shoulder injury. Be specific." class="mt-1" data-translate-key="limitationsPlaceholder"></textarea>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6 mt-6">
                      <div>
-                        <label for="structuringStyle">Workout Structuring Style:</label>
+                        <label for="structuringStyle" data-translate-key="structuringStyleLabel">Workout Structuring Style:</label>
                         <select id="structuringStyle" name="structuringStyle" class="mt-1">
-                            <option value="Full Body">Full Body Routines</option>
-                            <option value="Split Routines">Split Routines (e.g., Push/Pull/Legs, Upper/Lower)</option>
-                            <option value="Flexible Mix">Flexible Mix (AI to decide best structure)</option>
+                            <option value="Full Body" data-translate-key="styleFullBody">Full Body Routines</option>
+                            <option value="Split Routines" data-translate-key="styleSplit">Split Routines (e.g., Push/Pull/Legs, Upper/Lower)</option>
+                            <option value="Flexible Mix" data-translate-key="styleFlexible">Flexible Mix (AI to decide best structure)</option>
                         </select>
                     </div>
                     <div class="space-y-3">
                         <div class="checkbox-item mt-1">
                             <input type="checkbox" id="includeWarmupCooldown" name="includeWarmupCooldown" value="Yes" checked>
-                            <label for="includeWarmupCooldown" class="ml-2">Include Warm-up & Cool-down suggestions?</label>
+                            <label for="includeWarmupCooldown" class="ml-2" data-translate-key="includeWarmupCooldownLabel">Include Warm-up & Cool-down suggestions?</label>
                         </div>
                         <div class="checkbox-item">
                             <input type="checkbox" id="includeNutrition" name="includeNutrition" value="Yes">
-                            <label for="includeNutrition" class="ml-2">Request basic nutrition guidelines summary?</label>
+                            <label for="includeNutrition" class="ml-2" data-translate-key="includeNutritionLabel">Request basic nutrition guidelines summary?</label>
                         </div>
                     </div>
                 </div>
             </div>
             
             <button type="submit" id="generatePlanBtn" class="w-full btn btn-primary text-lg">
-                ✨ Generate My Personalized Plan ✨
+                <span data-translate-key="generatePlanBtnText">✨ Generate My Personalized Plan ✨</span>
             </button>
         </form>
 
@@ -330,7 +331,7 @@
 
         <!-- Plan Display Area -->
         <div id="planResultArea" class="mt-10 hidden">
-            <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center">Your Personalized Workout Plan</h2>
+            <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center" data-translate-key="planResultTitle">Your Personalized Workout Plan</h2>
             <div id="planContent" class="space-y-6">
                 <!-- Plan will be rendered here -->
             </div>
@@ -338,8 +339,8 @@
     </div>
 
     <footer class="mt-16 mb-8 text-center text-sm text-gray-500">
-        <p>&copy; 2025 AI Fitness Planner. Powered by Gemini.</p>
-        <p>This is a demo application. Consult a healthcare professional before starting any new fitness program.</p>
+        <p data-translate-key="footerCopyright">&copy; 2025 AI Fitness Planner. Powered by Gemini.</p>
+        <p data-translate-key="footerDisclaimer">This is a demo application. Consult a healthcare professional before starting any new fitness program.</p>
     </footer>
 
     <script>
@@ -353,35 +354,304 @@
         const planResultArea = document.getElementById('planResultArea');
         const planContent = document.getElementById('planContent');
         const apiKeyInput = document.getElementById('apiKey');
-        const languageSetting = document.getElementById('languageSetting'); // Placeholder
+        const languageSetting = document.getElementById('languageSetting');
+
+        // --- Basic Translation Data (Placeholder) ---
+        const translations = {
+            en: {
+                appTitle: "AI Fitness Planner",
+                appSubtitle: "Your Personalized Workout Journey Starts Here",
+                apiKeyLabel: "Gemini API Key (Optional)",
+                apiKeyPlaceholder: "Enter your Gemini API Key if using models other than gemini-2.0-flash",
+                apiKeyNote: "For `gemini-2.0-flash`, the key is often handled by the environment. Provide if you intend to switch models or if prompted.",
+                step1Title: "Step 1: Basic Information",
+                ageLabel: "Age (10-99):",
+                genderLabel: "Gender:",
+                genderMale: "Male",
+                genderFemale: "Female",
+                genderOther: "Other/Prefer not to say",
+                heightLabel: "Height (cm, 100-250):",
+                weightLabel: "Weight (kg, 30-200):",
+                activityLevelLabel: "Activity Level (Daily):",
+                activitySedentary: "Sedentary (little or no exercise)",
+                activityLightly: "Lightly Active (light exercise/sports 1-3 days/week)",
+                activityModerately: "Moderately Active (moderate exercise/sports 3-5 days/week)",
+                activityVery: "Very Active (hard exercise/sports 6-7 days a week)",
+                activityExtra: "Extra Active (very hard exercise/sports & physical job)",
+                step2Title: "Step 2: Goals & General Preferences",
+                goalLabel: "Primary Goal:",
+                goalFatLoss: "Fat Loss",
+                goalMuscleGain: "Muscle Gain",
+                goalEndurance: "Endurance Improvement",
+                goalFlexibility: "Flexibility & Mobility",
+                goalGeneralHealth: "General Health & Fitness",
+                timeframeLabel: "Timeframe for Goal (e.g., 4 weeks, 3 months):",
+                timeframePlaceholder: "e.g., 8 weeks",
+                experienceLabel: "Exercise Experience Level:",
+                expBeginner: "Beginner (New to exercise or returning after a long break)",
+                expIntermediate: "Intermediate (Consistent exercise for 6+ months)",
+                expAdvanced: "Advanced (Consistent, structured training for 1+ year)",
+                daysPerWeekLabel: "Workout Days Per Week (1-7):",
+                sessionDurationLabel: "Max Duration Per Session (minutes, 20-120):",
+                equipmentLabel: "Equipment Availability:",
+                equipNone: "None (Bodyweight only)",
+                equipBasic: "Basic (Dumbbells, Resistance Bands)",
+                equipFullGym: "Full Gym Access",
+                step3Title: "Step 3: Advanced Customization",
+                preferredTypesLabel: "Preferred Exercise Types:",
+                typeCardio: "Cardio (Running, Cycling, etc.)",
+                typeStrength: "Strength Training (Weights)",
+                typeBodyweight: "Bodyweight Exercises",
+                typeYogaPilates: "Yoga / Pilates",
+                typeHIIT: "HIIT (High-Intensity Interval Training)",
+                focusAreasLabel: "Focus Areas (Optional):",
+                focusUpper: "Upper Body",
+                focusLower: "Lower Body",
+                focusCore: "Core Strength",
+                focusFlexibility: "Flexibility / Mobility",
+                focusBalance: "Balance",
+                limitationsLabel: "Physical Limitations or Injuries (if any):",
+                limitationsPlaceholder: "e.g., sensitive knees, past shoulder injury. Be specific.",
+                structuringStyleLabel: "Workout Structuring Style:",
+                styleFullBody: "Full Body Routines",
+                styleSplit: "Split Routines (e.g., Push/Pull/Legs, Upper/Lower)",
+                styleFlexible: "Flexible Mix (AI to decide best structure)",
+                includeWarmupCooldownLabel: "Include Warm-up & Cool-down suggestions?",
+                includeNutritionLabel: "Request basic nutrition guidelines summary?",
+                generatePlanBtnText: "✨ Generate My Personalized Plan ✨",
+                planResultTitle: "Your Personalized Workout Plan",
+                footerCopyright: "&copy; 2025 AI Fitness Planner. Powered by Gemini.",
+                footerDisclaimer: "This is a demo application. Consult a healthcare professional before starting any new fitness program.",
+                generatingPlanMsg: "🧘 Generating your personalized plan... This might take a moment.",
+                errorFieldsMsg: "Oops! Please fill out all required fields correctly.",
+                successPlanMsg: "🚀 Workout plan generated successfully! Scroll down to see it.",
+                errorApiMsg: "Error: {errorMessage}. Please check your inputs or API key and try again.",
+                planOverviewTitle: "📋 Plan Overview",
+                totalWeeksText: "Total Weeks:",
+                workoutsPerWeekText: "Workouts Per Week:",
+                warmupTitle: "Warm-up Routine",
+                cooldownTitle: "Cool-down Routine",
+                nutritionTitle: "🍎 Basic Nutrition Guidelines",
+                caloriesEstimateText: "Estimated Daily Calories:",
+                macroBreakdownText: "Macro Breakdown (P/C/F):",
+                generalAdviceText: "General Advice:",
+                noExercisesText: "No specific exercises listed for this day.",
+                restDayText: "😌 This is a designated rest day. Enjoy your recovery!",
+                focusText: "Focus:",
+                exercisesTitle: "Exercises:",
+                setsText: "Sets:",
+                repsDurationText: "Reps/Duration:",
+                restText: "Rest:",
+                noteText: "💡 Note:",
+                noPlanDataMsg: "Could not retrieve plan data.",
+                noWorkoutDaysMsg: "No workout days were specified in the generated plan."
+
+            },
+            fa: {
+                appTitle: "برنامه‌ریز تناسب اندام هوش مصنوعی",
+                appSubtitle: "سفر تمرینی شخصی شما از اینجا شروع می‌شود",
+                apiKeyLabel: "کلید API Gemini (اختیاری)",
+                apiKeyPlaceholder: "کلید API Gemini خود را وارد کنید (اگر از مدلی غیر از gemini-2.0-flash استفاده می‌کنید)",
+                apiKeyNote: "برای `gemini-2.0-flash`، کلید اغلب توسط محیط مدیریت می‌شود. در صورت تغییر مدل یا درخواست، ارائه دهید.",
+                step1Title: "مرحله ۱: اطلاعات پایه",
+                ageLabel: "سن (۱۰-۹۹):",
+                genderLabel: "جنسیت:",
+                genderMale: "مرد",
+                genderFemale: "زن",
+                genderOther: "سایر/ترجیح می‌دهم نگویم",
+                heightLabel: "قد (سانتی‌متر، ۱۰۰-۲۵۰):",
+                weightLabel: "وزن (کیلوگرم، ۳۰-۲۰۰):",
+                activityLevelLabel: "سطح فعالیت (روزانه):",
+                activitySedentary: "کم‌تحرک (بدون ورزش یا ورزش کم)",
+                activityLightly: "فعالیت سبک (ورزش سبک ۱-۳ روز در هفته)",
+                activityModerately: "فعالیت متوسط (ورزش متوسط ۳-۵ روز در هفته)",
+                activityVery: "بسیار فعال (ورزش سنگین ۶-۷ روز در هفته)",
+                activityExtra: "فوق‌العاده فعال (ورزش بسیار سنگین و شغل فیزیکی)",
+                step2Title: "مرحله ۲: اهداف و ترجیحات عمومی",
+                goalLabel: "هدف اصلی:",
+                goalFatLoss: "کاهش چربی",
+                goalMuscleGain: "افزایش عضله",
+                goalEndurance: "بهبود استقامت",
+                goalFlexibility: "انعطاف‌پذیری و تحرک",
+                goalGeneralHealth: "سلامت و تناسب اندام عمومی",
+                timeframeLabel: "چارچوب زمانی برای هدف (مثلا ۴ هفته، ۳ ماه):",
+                timeframePlaceholder: "مثلا ۸ هفته",
+                experienceLabel: "سطح تجربه ورزشی:",
+                expBeginner: "مبتدی (تازه وارد به ورزش یا بازگشت پس از مدت طولانی)",
+                expIntermediate: "متوسط (ورزش منظم برای ۶+ ماه)",
+                expAdvanced: "پیشرفته (تمرین منظم و ساختاریافته برای ۱+ سال)",
+                daysPerWeekLabel: "روزهای تمرین در هفته (۱-۷):",
+                sessionDurationLabel: "حداکثر مدت هر جلسه (دقیقه، ۲۰-۱۲۰):",
+                equipmentLabel: "تجهیزات موجود:",
+                equipNone: "هیچ (فقط وزن بدن)",
+                equipBasic: "پایه (دمبل، کش مقاومتی)",
+                equipFullGym: "دسترسی کامل به باشگاه",
+                step3Title: "مرحله ۳: سفارشی‌سازی پیشرفته",
+                preferredTypesLabel: "انواع تمرین ترجیحی:",
+                typeCardio: "کاردیو (دویدن، دوچرخه‌سواری، و غیره)",
+                typeStrength: "تمرین قدرتی (وزنه)",
+                typeBodyweight: "تمرینات وزن بدن",
+                typeYogaPilates: "یوگا / پیلاتس",
+                typeHIIT: "HIIT (تمرین تناوبی با شدت بالا)",
+                focusAreasLabel: "نواحی تمرکز (اختیاری):",
+                focusUpper: "بالاتنه",
+                focusLower: "پایین‌تنه",
+                focusCore: "قدرت مرکزی بدن",
+                focusFlexibility: "انعطاف‌پذیری / تحرک",
+                focusBalance: "تعادل",
+                limitationsLabel: "محدودیت‌های فیزیکی یا آسیب‌دیدگی‌ها (در صورت وجود):",
+                limitationsPlaceholder: "مثلا زانوهای حساس، آسیب‌دیدگی قبلی شانه. دقیق باشید.",
+                structuringStyleLabel: "سبک ساختاردهی تمرین:",
+                styleFullBody: "روتین‌های تمام بدن",
+                styleSplit: "روتین‌های تفکیکی (مثلا پوش/پول/لگ، بالاتنه/پایین‌تنه)",
+                styleFlexible: "ترکیب انعطاف‌پذیر (هوش مصنوعی بهترین ساختار را تصمیم می‌گیرد)",
+                includeWarmupCooldownLabel: "پیشنهادات گرم کردن و سرد کردن گنجانده شود؟",
+                includeNutritionLabel: "خلاصه راهنمای تغذیه پایه درخواست شود؟",
+                generatePlanBtnText: "✨ ایجاد برنامه شخصی من ✨",
+                planResultTitle: "برنامه تمرینی شخصی شما",
+                footerCopyright: "&copy; ۲۰۲۵ برنامه‌ریز تناسب اندام هوش مصنوعی. قدرت گرفته از Gemini.",
+                footerDisclaimer: "این یک برنامه نمایشی است. قبل از شروع هر برنامه تناسب اندام جدید با یک متخصص مراقبت‌های بهداشتی مشورت کنید.",
+                generatingPlanMsg: "🧘 در حال ایجاد برنامه شخصی شما... این ممکن است کمی طول بکشد.",
+                errorFieldsMsg: "خطا! لطفا تمام فیلدهای اجباری را به درستی پر کنید.",
+                successPlanMsg: "🚀 برنامه تمرینی با موفقیت ایجاد شد! برای مشاهده به پایین اسکرول کنید.",
+                errorApiMsg: "خطا: {errorMessage}. لطفا ورودی‌ها یا کلید API خود را بررسی کرده و دوباره تلاش کنید.",
+                planOverviewTitle: "📋 نمای کلی برنامه",
+                totalWeeksText: "تعداد کل هفته‌ها:",
+                workoutsPerWeekText: "تمرین در هفته:",
+                warmupTitle: "روتین گرم کردن",
+                cooldownTitle: "روتین سرد کردن",
+                nutritionTitle: "🍎 راهنمای تغذیه پایه",
+                caloriesEstimateText: "کالری تخمینی روزانه:",
+                macroBreakdownText: "تفکیک ماکروها (پروتئین/کربوهیدرات/چربی):",
+                generalAdviceText: "توصیه‌های عمومی:",
+                noExercisesText: "هیچ تمرین خاصی برای این روز لیست نشده است.",
+                restDayText: "😌 این یک روز استراحت تعیین شده است. از ریکاوری خود لذت ببرید!",
+                focusText: "تمرکز:",
+                exercisesTitle: "تمرینات:",
+                setsText: "ست‌ها:",
+                repsDurationText: "تکرار/مدت:",
+                restText: "استراحت:",
+                noteText: "💡 نکته:",
+                noPlanDataMsg: "بازیابی اطلاعات برنامه امکان‌پذیر نبود.",
+                noWorkoutDaysMsg: "هیچ روز تمرینی در برنامه تولید شده مشخص نشده است."
+            }
+        };
+
 
         // --- Application Logic ---
         const App = {
+            currentLanguage: 'en', // Default language
+
             init: () => {
                 fitnessForm.addEventListener('submit', App.handleFormSubmit);
-                // Add listener for language setting if it becomes functional
-                // languageSetting.addEventListener('change', App.handleLanguageChange);
-                console.log("Fitness Planner Initialized with Advanced Fields");
+                languageSetting.addEventListener('change', App.handleLanguageChange);
+                App.setLanguage(App.currentLanguage); // Apply default language on init
+                console.log("Fitness Planner Initialized with Advanced Fields and Language Support");
             },
 
-            // Placeholder for language change functionality
-            // handleLanguageChange: (event) => {
-            //     console.log("Language changed to:", event.target.value);
-            //     // Future: Implement UI text updates and potentially prompt language adjustments
-            //     App.displayMessage(`Language set to ${event.target.value}. (Functionality to re-prompt/translate not yet implemented)`, "info");
-            // },
+            setLanguage: (lang) => {
+                App.currentLanguage = lang;
+                document.documentElement.lang = lang; // Set lang attribute on HTML element
+                // Basic implementation: Update text content based on data-translate-key
+                document.querySelectorAll('[data-translate-key]').forEach(element => {
+                    const key = element.getAttribute('data-translate-key');
+                    if (translations[lang] && translations[lang][key]) {
+                        if (element.tagName === 'INPUT' && element.placeholder) {
+                            element.placeholder = translations[lang][key];
+                        } else {
+                            element.innerHTML = translations[lang][key]; // Use innerHTML to support emojis in button
+                        }
+                    }
+                });
+                // For more complex scenarios (e.g., select options), more specific updates would be needed.
+                // Example for select options (can be generalized later)
+                App.translateSelectOptions('gender', lang);
+                App.translateSelectOptions('activityLevel', lang);
+                App.translateSelectOptions('goal', lang);
+                App.translateSelectOptions('experienceLevel', lang);
+                App.translateSelectOptions('equipment', lang);
+                App.translateSelectOptions('structuringStyle', lang);
+
+                 // Adjust text direction for Persian
+                if (lang === 'fa') {
+                    document.body.dir = 'rtl';
+                    // Specific RTL adjustments for layout if needed
+                    document.querySelectorAll('.form-section h2 .step-icon').forEach(icon => {
+                        icon.style.marginLeft = '0.75rem';
+                        icon.style.marginRight = '0';
+                    });
+                     document.querySelectorAll('.checkbox-group label, .radio-group label').forEach(label => {
+                        label.style.marginRight = '0.5rem';
+                        label.style.marginLeft = '0';
+                    });
+                    document.querySelectorAll('.checkbox-item label[for^="include"]').forEach(label => {
+                         label.style.marginRight = '0.5rem'; // For checkboxes like "Include Warmup"
+                         label.style.marginLeft = '0';
+                    });
+
+
+                } else {
+                    document.body.dir = 'ltr';
+                    document.querySelectorAll('.form-section h2 .step-icon').forEach(icon => {
+                        icon.style.marginRight = '0.75rem';
+                        icon.style.marginLeft = '0';
+                    });
+                    document.querySelectorAll('.checkbox-group label, .radio-group label').forEach(label => {
+                        label.style.marginLeft = '0.5rem';
+                        label.style.marginRight = '0';
+                    });
+                     document.querySelectorAll('.checkbox-item label[for^="include"]').forEach(label => {
+                         label.style.marginLeft = '0.5rem';
+                         label.style.marginRight = '0';
+                    });
+                }
+            },
+
+            translateSelectOptions: (selectId, lang) => {
+                const selectElement = document.getElementById(selectId);
+                if (selectElement) {
+                    Array.from(selectElement.options).forEach(option => {
+                        // Construct a key like 'genderMale', 'activitySedentary'
+                        // This requires a consistent naming convention in translations object
+                        const keyPrefix = selectId.replace(/([A-Z])/g, '_$1').toLowerCase(); // e.g. experienceLevel -> experience_level
+                        let optionKeyPart = option.value.replace(/\s+/g, ''); // Remove spaces
+                        // Handle specific cases or create a more robust mapping if needed
+                        if (selectId === 'gender') optionKeyPart = `gender${optionKeyPart}`;
+                        else if (selectId === 'activityLevel') optionKeyPart = `activity${optionKeyPart}`;
+                        else if (selectId === 'goal') optionKeyPart = `goal${optionKeyPart.replace('Improvement','').replace('&Mobility','')}`;
+                        else if (selectId === 'experienceLevel') optionKeyPart = `exp${optionKeyPart}`;
+                        else if (selectId === 'equipment') optionKeyPart = `equip${optionKeyPart.replace('only','').replace('ResistanceBands','').replace('Access','')}`;
+                        else if (selectId === 'structuringStyle') optionKeyPart = `style${optionKeyPart.replace('Routines','').replace('(e.g.,Push/Pull/Legs,Upper/Lower)','').replace('(AItodecidebeststructure)','')}`;
+
+
+                        if (translations[lang] && translations[lang][optionKeyPart]) {
+                            option.textContent = translations[lang][optionKeyPart];
+                        }
+                    });
+                }
+            },
+
+
+            handleLanguageChange: (event) => {
+                App.setLanguage(event.target.value);
+                // console.log("Language changed to:", App.currentLanguage);
+                // App.displayMessage(`Language set to ${App.currentLanguage}. UI updated.`, "info");
+                // Future: If API supports language, re-prompt or translate plan.
+            },
 
             handleFormSubmit: async (event) => {
                 event.preventDefault();
                 App.clearMessages();
-                App.displayMessage("🧘 Generating your personalized plan... This might take a moment.", "loading");
+                const loadingMsgKey = translations[App.currentLanguage]?.generatingPlanMsg || "🧘 Generating your personalized plan... This might take a moment.";
+                App.displayMessage(loadingMsgKey, "loading");
                 generatePlanBtn.disabled = true;
                 generatePlanBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 planResultArea.classList.add('hidden'); 
 
                 const formData = App.getFormData();
                 if (!formData) { 
-                    App.displayMessage("Oops! Please fill out all required fields correctly.", "error");
+                    const errorFieldsKey = translations[App.currentLanguage]?.errorFieldsMsg || "Oops! Please fill out all required fields correctly.";
+                    App.displayMessage(errorFieldsKey, "error");
                     generatePlanBtn.disabled = false;
                     generatePlanBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                     return;
@@ -399,8 +669,7 @@
                         generationConfig: {
                             responseMimeType: "application/json",
                             responseSchema: planSchema,
-                            temperature: 0.6, // Adjusted for more deterministic fitness plans
-                            // maxOutputTokens: 2048 // Default is often sufficient
+                            temperature: 0.6, 
                         }
                     };
 
@@ -428,7 +697,8 @@
                         const planData = JSON.parse(planJsonString); 
                         
                         App.renderPlan(planData.plan); 
-                        App.displayMessage("🚀 Workout plan generated successfully! Scroll down to see it.", "success");
+                        const successMsgKey = translations[App.currentLanguage]?.successPlanMsg || "🚀 Workout plan generated successfully! Scroll down to see it.";
+                        App.displayMessage(successMsgKey, "success");
                         planResultArea.classList.remove('hidden');
                         planResultArea.scrollIntoView({ behavior: 'smooth' });
                     } else {
@@ -438,7 +708,9 @@
 
                 } catch (error) {
                     console.error("Error generating plan:", error);
-                    App.displayMessage(`Error: ${error.message}. Please check your inputs or API key and try again.`, "error");
+                    let errorApiMsg = translations[App.currentLanguage]?.errorApiMsg || "Error: {errorMessage}. Please check your inputs or API key and try again.";
+                    errorApiMsg = errorApiMsg.replace('{errorMessage}', error.message);
+                    App.displayMessage(errorApiMsg, "error");
                     planResultArea.classList.add('hidden');
                 } finally {
                     generatePlanBtn.disabled = false;
@@ -472,31 +744,34 @@
                     structuringStyle: fitnessForm.elements.structuringStyle.value,
                     includeWarmupCooldown: fitnessForm.elements.includeWarmupCooldown.checked,
                     includeNutrition: fitnessForm.elements.includeNutrition.checked,
+                    currentLanguage: App.currentLanguage // Include current language
                 };
 
-                // More robust validation for required fields
                 const requiredFields = ['age', 'gender', 'height', 'weight', 'activityLevel', 'goal', 'timeframe', 'experienceLevel', 'daysPerWeek', 'sessionDuration', 'equipment'];
                 for (const key of requiredFields) {
                     if (!data[key] && data[key] !== 0) { 
                         console.warn(`Missing required field: ${key}`);
-                         // Highlight the field (basic example)
                         const fieldElement = fitnessForm.elements[key];
                         if (fieldElement) {
                             fieldElement.style.borderColor = 'red';
-                            // You might want to add a more prominent error message next to the field
+                            fieldElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
                         return null; 
                     } else {
                         const fieldElement = fitnessForm.elements[key];
-                        if (fieldElement) fieldElement.style.borderColor = ''; // Reset border
+                        if (fieldElement) fieldElement.style.borderColor = ''; 
                     }
                 }
                 return data;
             },
 
             buildPrompt: (profile) => {
-                // Enhanced prompt based on new fields from section 5.2 of the original specification
-                return `You are an expert AI Fitness Coach. Generate a highly personalized and structured workout plan.
+                // Adding language context to the prompt.
+                // The AI should ideally generate the plan in the requested language if capable,
+                // or at least be aware of the user's language preference for tone/terminology.
+                let languageInstruction = `The user's preferred language is ${profile.currentLanguage === 'fa' ? 'Persian (Farsi)' : 'English'}. If possible, generate the plan details (exercise names, notes) in this language. If not, English is acceptable.`;
+
+                return `You are an expert AI Fitness Coach. ${languageInstruction} Generate a highly personalized and structured workout plan.
 User Profile:
 - Age: ${profile.age}
 - Gender: ${profile.gender}
@@ -522,7 +797,7 @@ Response Requirements:
 3.  The "plan" object must contain:
     * "totalWeeks" (Integer): Suggest a suitable number of weeks (e.g., 4, 6, 8, or based on timeframe).
     * "daysPerWeek" (Integer): Match user input (${profile.daysPerWeek}).
-    * "days" (Array of DayPlan Objects): Represents the workout schedule for one week. Length should match "daysPerWeek".
+    * "days" (Array of DayPlan Objects): Represents the workout schedule for one week. Length should match "daysPerWeek". If daysPerWeek < 7, the array should still represent a 7-day cycle, with appropriate days marked as "Rest Day".
     * "warmupRoutine" (String, Optional): If requested, a brief general warm-up routine.
     * "cooldownRoutine" (String, Optional): If requested, a brief general cool-down routine.
     * "nutritionGuidelines" (Object, Optional): If requested, include this object.
@@ -540,14 +815,13 @@ Response Requirements:
     * "restSeconds" (Integer): e.g., 60, 90.
     * "notes" (String, Optional): Form cues or tips.
 6.  Adapt exercises based on limitations. Prioritize safety and effectiveness.
-7.  If daysPerWeek < 7, intelligently incorporate rest days (these should be distinct DayPlan objects with empty exercises array and "Rest Day" summary).
-8.  The response must be strictly the JSON object, no additional text.
+7.  The response must be strictly the JSON object, no additional text.
 Example Exercise: { "name": "Push-ups", "sets": "3", "reps": "To failure", "restSeconds": 60, "notes": "Maintain a straight line from head to heels." }
 Example Rest Day: { "dayLabel": "Day 2: Rest", "summary": "Rest Day", "exercises": [] }`;
             },
 
             getPlanSchema: () => {
-                // Updated schema based on the enhanced prompt and original spec (section 4.2)
+                // Schema remains largely the same, as the output structure is consistent
                 return {
                     type: "OBJECT",
                     properties: {
@@ -558,7 +832,7 @@ Example Rest Day: { "dayLabel": "Day 2: Rest", "summary": "Rest Day", "exercises
                                 "daysPerWeek": { type: "INTEGER", description: "Number of workout days per week, matching user input." },
                                 "days": {
                                     type: "ARRAY",
-                                    description: "Array of day plans for one week. Length should match daysPerWeek or include rest days to make up 7 days.",
+                                    description: "Array of day plans, representing a 7-day cycle. Length should be 7, with workout days matching daysPerWeek and others as rest days.",
                                     items: {
                                         type: "OBJECT",
                                         properties: {
@@ -617,19 +891,20 @@ Example Rest Day: { "dayLabel": "Day 2: Rest", "summary": "Rest Day", "exercises
             },
 
             renderPlan: (planData) => {
-                planContent.innerHTML = ''; // Clear previous plan
+                planContent.innerHTML = ''; 
+                const currentLang = App.currentLanguage;
 
                 if (!planData) {
-                    planContent.innerHTML = '<p class="text-gray-600">Could not retrieve plan data.</p>';
+                    planContent.innerHTML = `<p class="text-gray-600">${translations[currentLang]?.noPlanDataMsg || 'Could not retrieve plan data.'}</p>`;
                     return;
                 }
 
                 const planHeader = document.createElement('div');
                 planHeader.className = 'mb-6 p-6 bg-indigo-50 rounded-xl border border-indigo-200 shadow';
                 planHeader.innerHTML = `
-                    <h3 class="text-2xl font-bold text-indigo-700 mb-3">📋 Plan Overview</h3>
-                    <p class="text-indigo-600 text-md"><strong>Total Weeks:</strong> ${planData.totalWeeks || 'Not specified'}</p>
-                    <p class="text-indigo-600 text-md"><strong>Workouts Per Week:</strong> ${planData.daysPerWeek || 'Not specified'}</p>
+                    <h3 class="text-2xl font-bold text-indigo-700 mb-3">${translations[currentLang]?.planOverviewTitle || '📋 Plan Overview'}</h3>
+                    <p class="text-indigo-600 text-md"><strong>${translations[currentLang]?.totalWeeksText || 'Total Weeks:'}</strong> ${planData.totalWeeks || 'Not specified'}</p>
+                    <p class="text-indigo-600 text-md"><strong>${translations[currentLang]?.workoutsPerWeekText || 'Workouts Per Week:'}</strong> ${planData.daysPerWeek || 'Not specified'}</p>
                 `;
                 planContent.appendChild(planHeader);
 
@@ -637,7 +912,7 @@ Example Rest Day: { "dayLabel": "Day 2: Rest", "summary": "Rest Day", "exercises
                     const warmupCard = document.createElement('div');
                     warmupCard.className = 'plan-card bg-green-50 border-green-200';
                     warmupCard.innerHTML = `
-                        <h3 class="text-xl font-semibold text-green-700">Warm-up Routine</h3>
+                        <h3 class="text-xl font-semibold text-green-700">${translations[currentLang]?.warmupTitle || 'Warm-up Routine'}</h3>
                         <p class="text-green-600 whitespace-pre-line">${planData.warmupRoutine}</p>
                     `;
                     planContent.appendChild(warmupCard);
@@ -648,40 +923,43 @@ Example Rest Day: { "dayLabel": "Day 2: Rest", "summary": "Rest Day", "exercises
                         const dayCard = document.createElement('div');
                         dayCard.className = 'plan-card';
 
-                        let exercisesHTML = '<p class="text-sm text-gray-500">No specific exercises listed for this day.</p>';
+                        let exercisesHTML = `<p class="text-sm text-gray-500">${translations[currentLang]?.noExercisesText || 'No specific exercises listed for this day.'}</p>`;
                         if (day.exercises && day.exercises.length > 0) {
                             exercisesHTML = '<ul class="divide-y divide-gray-100">';
                             day.exercises.forEach(ex => {
                                 exercisesHTML += `
                                     <li class="exercise-item py-4">
                                         <p class="font-semibold text-lg text-gray-800">${ex.name}</p>
-                                        <p class="text-sm text-gray-600"><strong>Sets:</strong> ${ex.sets}, <strong>Reps/Duration:</strong> ${ex.reps}, <strong>Rest:</strong> ${ex.restSeconds}s</p>
-                                        ${ex.notes ? `<p class="text-xs text-gray-500 mt-1 bg-gray-50 p-2 rounded"><em>💡 Note: ${ex.notes}</em></p>` : ''}
+                                        <p class="text-sm text-gray-600">
+                                            <strong>${translations[currentLang]?.setsText || 'Sets:'}</strong> ${ex.sets}, 
+                                            <strong>${translations[currentLang]?.repsDurationText || 'Reps/Duration:'}</strong> ${ex.reps}, 
+                                            <strong>${translations[currentLang]?.restText || 'Rest:'}</strong> ${ex.restSeconds}s
+                                        </p>
+                                        ${ex.notes ? `<p class="text-xs text-gray-500 mt-1 bg-gray-50 p-2 rounded"><em>${translations[currentLang]?.noteText || '💡 Note:'} ${ex.notes}</em></p>` : ''}
                                     </li>`;
                             });
                             exercisesHTML += '</ul>';
-                        } else if (day.summary && day.summary.toLowerCase().includes("rest")) {
-                             exercisesHTML = '<p class="text-md text-emerald-600 font-medium py-3">😌 This is a designated rest day. Enjoy your recovery!</p>';
+                        } else if (day.summary && (day.summary.toLowerCase().includes("rest") || day.summary.toLowerCase().includes("استراحت"))) {
+                             exercisesHTML = `<p class="text-md text-emerald-600 font-medium py-3">${translations[currentLang]?.restDayText || '😌 This is a designated rest day. Enjoy your recovery!'}</p>`;
                         }
 
                         dayCard.innerHTML = `
                             <h3 class="text-xl font-semibold text-indigo-700 border-b border-indigo-200 pb-2 mb-4">${day.dayLabel}</h3>
-                            <p class="text-md text-gray-700 mb-4"><strong>Focus:</strong> ${day.summary}</p>
-                            <h4 class="text-lg font-medium text-indigo-600">Exercises:</h4>
+                            <p class="text-md text-gray-700 mb-4"><strong>${translations[currentLang]?.focusText || 'Focus:'}</strong> ${day.summary}</p>
+                            <h4 class="text-lg font-medium text-indigo-600">${translations[currentLang]?.exercisesTitle || 'Exercises:'}</h4>
                             ${exercisesHTML}
                         `;
                         planContent.appendChild(dayCard);
                     });
                 } else {
-                     planContent.innerHTML += '<p class="text-gray-600 p-4 text-center">No workout days were specified in the generated plan.</p>';
+                     planContent.innerHTML += `<p class="text-gray-600 p-4 text-center">${translations[currentLang]?.noWorkoutDaysMsg || 'No workout days were specified in the generated plan.'}</p>`;
                 }
                 
-
                 if (planData.cooldownRoutine) {
                     const cooldownCard = document.createElement('div');
                     cooldownCard.className = 'plan-card bg-sky-50 border-sky-200';
                     cooldownCard.innerHTML = `
-                        <h3 class="text-xl font-semibold text-sky-700">Cool-down Routine</h3>
+                        <h3 class="text-xl font-semibold text-sky-700">${translations[currentLang]?.cooldownTitle || 'Cool-down Routine'}</h3>
                         <p class="text-sky-600 whitespace-pre-line">${planData.cooldownRoutine}</p>
                     `;
                     planContent.appendChild(cooldownCard);
@@ -694,12 +972,15 @@ Example Rest Day: { "dayLabel": "Day 2: Rest", "summary": "Rest Day", "exercises
                     let adviceHTML = '';
                     if (nutrition.generalAdvice && nutrition.generalAdvice.length > 0) {
                         adviceHTML = '<ul>' + nutrition.generalAdvice.map(adv => `<li class="ml-4 list-disc text-orange-600">${adv}</li>`).join('') + '</ul>';
+                         if(App.currentLanguage === 'fa') { // Adjust list style for RTL
+                            adviceHTML = '<ul class="mr-4">' + nutrition.generalAdvice.map(adv => `<li class="list-disc text-orange-600">${adv}</li>`).join('') + '</ul>';
+                        }
                     }
                     nutritionCard.innerHTML = `
-                        <h3 class="text-xl font-semibold text-orange-700">🍎 Basic Nutrition Guidelines</h3>
-                        <p class="text-orange-600"><strong>Estimated Daily Calories:</strong> ${nutrition.dailyCaloriesEstimate || 'Not specified'}</p>
-                        ${nutrition.macroBreakdown ? `<p class="text-orange-600"><strong>Macro Breakdown (P/C/F):</strong> ${nutrition.macroBreakdown.proteinPct}% / ${nutrition.macroBreakdown.carbsPct}% / ${nutrition.macroBreakdown.fatsPct}%</p>` : ''}
-                        ${adviceHTML ? `<h5 class="font-semibold mt-2 text-orange-700">General Advice:</h5>${adviceHTML}` : ''}
+                        <h3 class="text-xl font-semibold text-orange-700">${translations[currentLang]?.nutritionTitle || '🍎 Basic Nutrition Guidelines'}</h3>
+                        <p class="text-orange-600"><strong>${translations[currentLang]?.caloriesEstimateText || 'Estimated Daily Calories:'}</strong> ${nutrition.dailyCaloriesEstimate || 'Not specified'}</p>
+                        ${nutrition.macroBreakdown ? `<p class="text-orange-600"><strong>${translations[currentLang]?.macroBreakdownText || 'Macro Breakdown (P/C/F):'}</strong> ${nutrition.macroBreakdown.proteinPct}% / ${nutrition.macroBreakdown.carbsPct}% / ${nutrition.macroBreakdown.fatsPct}%</p>` : ''}
+                        ${adviceHTML ? `<h5 class="font-semibold mt-2 text-orange-700">${translations[currentLang]?.generalAdviceText || 'General Advice:'}</h5>${adviceHTML}` : ''}
                     `;
                     planContent.appendChild(nutritionCard);
                 }
@@ -708,11 +989,14 @@ Example Rest Day: { "dayLabel": "Day 2: Rest", "summary": "Rest Day", "exercises
             displayMessage: (message, type = "info") => { 
                 messageArea.innerHTML = ''; 
                 const messageDiv = document.createElement('div');
-                messageDiv.className = `message-box ${type} flex items-center`; // Added flex for icon alignment
+                messageDiv.className = `message-box ${type} flex items-center`; 
                 let icon = '';
                 if (type === 'error') icon = '<span class="mr-2 text-lg">⚠️</span>';
                 if (type === 'success') icon = '<span class="mr-2 text-lg">✅</span>';
-                if (type === 'loading') icon = '<span class="mr-2 text-lg animate-spin">⏳</span>'; // Simple spinner
+                if (type === 'loading') icon = '<span class="mr-2 text-lg animate-spin">⏳</span>'; 
+                 if (App.currentLanguage === 'fa' && icon) { // Adjust icon margin for RTL
+                    icon = icon.replace('mr-2', 'ml-2');
+                }
                 
                 messageDiv.innerHTML = icon + message;
                 messageArea.appendChild(messageDiv);
