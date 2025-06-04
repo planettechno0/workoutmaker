@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fitness Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        .form-section {
+            margin-bottom: 1.5rem;
+        }
+        .form-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1f2937; /* gray-800 */
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151; /* gray-700 */
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db; /* gray-300 */
+            border-radius: 0.375rem; /* rounded-md */
+            box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            border-color: #2563eb; /* blue-600 */
+            box-shadow: 0 0 0 2px #bfdbfe; /* blue-200 */
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem; /* rounded-md */
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-primary {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8; /* blue-700 */
+        }
+        .message-box {
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            font-size: 0.875rem; /* text-sm */
+        }
+        .message-box.error {
+            background-color: #fee2e2; /* red-100 */
+            color: #b91c1c; /* red-700 */
+            border: 1px solid #fecaca; /* red-300 */
+        }
+        .message-box.success {
+            background-color: #dcfce7; /* green-100 */
+            color: #15803d; /* green-700 */
+            border: 1px solid #bbf7d0; /* green-300 */
+        }
+        .message-box.loading {
+            background-color: #e0f2fe; /* light blue-100 */
+            color: #075985; /* light blue-700 */
+            border: 1px solid #bae6fd; /* light blue-300 */
+        }
+        .plan-card {
+            background-color: white;
+            border: 1px solid #e5e7eb; /* gray-200 */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+        .plan-card h3 {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .plan-card h4 {
+            font-size: 1rem; /* text-base */
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: #1e40af; /* blue-800 */
+        }
+        .exercise-item {
+            padding: 0.5rem;
+            border-bottom: 1px solid #f3f4f6; /* gray-100 */
+        }
+        .exercise-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-8 px-4">
+
+    <div class="w-full max-w-3xl bg-white p-6 sm:p-8 rounded-xl shadow-2xl">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">AI Fitness Planner</h1>
+            <p class="text-gray-600 mt-2">Personalized Workouts Powered by Gemini</p>
+        </header>
+
+        <!-- API Key Input -->
+        <div class="mb-6 p-4 border border-yellow-300 bg-yellow-50 rounded-lg">
+            <label for="apiKey" class="block text-sm font-medium text-yellow-700 mb-1">Gemini API Key (Optional for gemini-2.0-flash in this environment)</label>
+            <input type="text" id="apiKey" name="apiKey" class="w-full p-2 border border-yellow-400 rounded-md shadow-sm" placeholder="Enter your Gemini API Key if using other models">
+            <p class="text-xs text-yellow-600 mt-1">For `gemini-2.0-flash`, the key is often handled by the environment. Provide if you intend to switch models or if prompted.</p>
+        </div>
+
+        <!-- Form Section -->
+        <form id="fitnessForm" class="space-y-6">
+            <div class="form-section">
+                <h2 class="border-b pb-2">Step 1: Basic Info</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <label for="age">Age (10-99):</label>
+                        <input type="number" id="age" name="age" min="10" max="99" required class="mt-1">
+                    </div>
+                    <div>
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender" required class="mt-1">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other/Prefer not to say</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="height">Height (cm, 100-250):</label>
+                        <input type="number" id="height" name="height" min="100" max="250" required class="mt-1">
+                    </div>
+                    <div>
+                        <label for="weight">Weight (kg, 30-200):</label>
+                        <input type="number" id="weight" name="weight" min="30" max="200" required class="mt-1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2 class="border-b pb-2">Step 2: Goals & Preferences</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <label for="goal">Primary Goal:</label>
+                        <select id="goal" name="goal" required class="mt-1">
+                            <option value="Fat Loss">Fat Loss</option>
+                            <option value="Muscle Gain">Muscle Gain</option>
+                            <option value="Endurance">Endurance</option>
+                            <option value="General Health">General Health</option>
+                            <option value="Flexibility">Flexibility</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="experienceLevel">Experience Level:</label>
+                        <select id="experienceLevel" name="experienceLevel" required class="mt-1">
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="daysPerWeek">Days per week for workouts (1-7):</label>
+                        <input type="number" id="daysPerWeek" name="daysPerWeek" min="1" max="7" required class="mt-1">
+                    </div>
+                    <div>
+                        <label for="sessionDuration">Max duration per session (minutes, 20-90):</label>
+                        <input type="number" id="sessionDuration" name="sessionDuration" min="20" max="120" step="5" required class="mt-1">
+                    </div>
+                    <div>
+                        <label for="equipment">Equipment Availability:</label>
+                        <select id="equipment" name="equipment" required class="mt-1">
+                            <option value="None">None (Bodyweight)</option>
+                            <option value="Basic">Basic (Dumbbells, Bands)</option>
+                            <option value="Full Gym">Full Gym Access</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" id="generatePlanBtn" class="w-full btn btn-primary">
+                Generate My Plan
+            </button>
+        </form>
+
+        <!-- Message Display Area -->
+        <div id="messageArea" class="mt-6"></div>
+
+        <!-- Plan Display Area -->
+        <div id="planResultArea" class="mt-8 hidden">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Your Personalized Workout Plan</h2>
+            <div id="planContent" class="space-y-4">
+                <!-- Plan will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-12 text-center text-sm text-gray-500">
+        <p>&copy; 2025 AI Fitness Planner. Powered by Gemini.</p>
+        <p>This is a demo application. Consult a healthcare professional before starting any new fitness program.</p>
+    </footer>
+
+    <script>
+        // --- Configuration & Constants ---
+        const GEMINI_API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+        
+        // --- DOM Elements ---
+        const fitnessForm = document.getElementById('fitnessForm');
+        const generatePlanBtn = document.getElementById('generatePlanBtn');
+        const messageArea = document.getElementById('messageArea');
+        const planResultArea = document.getElementById('planResultArea');
+        const planContent = document.getElementById('planContent');
+        const apiKeyInput = document.getElementById('apiKey');
+
+        // --- Application Logic ---
+        const App = {
+            init: () => {
+                fitnessForm.addEventListener('submit', App.handleFormSubmit);
+                console.log("Fitness Planner Initialized");
+            },
+
+            handleFormSubmit: async (event) => {
+                event.preventDefault();
+                App.clearMessages();
+                App.displayMessage("Generating your personalized plan... Please wait.", "loading");
+                generatePlanBtn.disabled = true;
+                planResultArea.classList.add('hidden'); // Hide previous results
+
+                const formData = App.getFormData();
+                if (!formData) { // Basic validation check
+                    App.displayMessage("Please fill out all required fields correctly.", "error");
+                    generatePlanBtn.disabled = false;
+                    return;
+                }
+
+                const prompt = App.buildPrompt(formData);
+                const planSchema = App.getPlanSchema();
+
+                try {
+                    const apiKey = apiKeyInput.value.trim() || ""; // Use user-provided key or empty for environment-handled
+                    
+                    const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                    const payload = {
+                        contents: chatHistory,
+                        generationConfig: {
+                            responseMimeType: "application/json",
+                            responseSchema: planSchema
+                        }
+                    };
+
+                    const fullApiUrl = `${GEMINI_API_BASE_URL}?key=${apiKey}`;
+
+                    const response = await fetch(fullApiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error("API Error Response:", errorData);
+                        throw new Error(`API Error: ${response.status} ${response.statusText}. ${errorData?.error?.message || 'Unknown error'}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        
+                        const planJsonString = result.candidates[0].content.parts[0].text;
+                        const planData = JSON.parse(planJsonString); // Gemini returns JSON as a string
+                        
+                        App.renderPlan(planData.plan); // Access the 'plan' object
+                        App.displayMessage("Workout plan generated successfully!", "success");
+                        planResultArea.classList.remove('hidden');
+                    } else {
+                        console.error("Unexpected API response structure:", result);
+                        throw new Error("Failed to get a valid plan from the API. The response structure was unexpected.");
+                    }
+
+                } catch (error) {
+                    console.error("Error generating plan:", error);
+                    App.displayMessage(`Error: ${error.message}`, "error");
+                    planResultArea.classList.add('hidden');
+                } finally {
+                    generatePlanBtn.disabled = false;
+                }
+            },
+
+            getFormData: () => {
+                const data = {
+                    age: fitnessForm.elements.age.value,
+                    gender: fitnessForm.elements.gender.value,
+                    height: fitnessForm.elements.height.value,
+                    weight: fitnessForm.elements.weight.value,
+                    goal: fitnessForm.elements.goal.value,
+                    experienceLevel: fitnessForm.elements.experienceLevel.value,
+                    daysPerWeek: fitnessForm.elements.daysPerWeek.value,
+                    sessionDuration: fitnessForm.elements.sessionDuration.value,
+                    equipment: fitnessForm.elements.equipment.value,
+                };
+
+                // Basic validation
+                for (const key in data) {
+                    if (!data[key] && data[key] !== 0) { // Check for empty strings, null, undefined but allow 0
+                        console.warn(`Missing field: ${key}`);
+                        return null; 
+                    }
+                }
+                // Add more specific validation as per your spec (min/max already on inputs)
+                return data;
+            },
+
+            buildPrompt: (profile) => {
+                // This prompt is based on section 5.2 of your specification
+                return `You are a professional fitness coach and AI assistant. Generate a personalized workout plan based on the following user profile:
+- Age: ${profile.age} years old
+- Gender: ${profile.gender}
+- Height: ${profile.height} cm
+- Weight: ${profile.weight} kg
+- Primary Fitness Goal: ${profile.goal}
+- Experience Level: ${profile.experienceLevel}
+- Workout Days Per Week: ${profile.daysPerWeek}
+- Maximum Session Duration: ${profile.sessionDuration} minutes
+- Equipment Availability: ${profile.equipment}
+
+Please adhere to the following requirements for your response:
+1.  The output MUST be a valid JSON object.
+2.  The root JSON object must contain a single key named "plan".
+3.  The value of the "plan" key must be an object containing:
+    * "totalWeeks" (Integer): Suggest a suitable number of weeks for an initial plan phase (e.g., 4, 6, or 8 weeks).
+    * "daysPerWeek" (Integer): This should match the user's input (${profile.daysPerWeek}).
+    * "days" (Array of Objects): An array representing the workout schedule. Each object in this array corresponds to a workout day or a rest day.
+4.  Each object within the "days" array must have the following properties:
+    * "dayLabel" (String): A descriptive label for the day (e.g., "Day 1 - Monday: Upper Body Strength", "Day 2 - Tuesday: Rest", "Week 1, Day 1: Full Body").
+    * "summary" (String): A brief summary of the day's focus (e.g., "Upper Body Strength Training", "Cardio & Core", "Active Recovery", "Rest Day").
+    * "exercises" (Array of Objects): An array of exercise objects for the workout day. This array should be empty if it's a rest day.
+5.  Each exercise object within the "exercises" array must have:
+    * "name" (String): The name of the exercise (e.g., "Barbell Bench Press", "Running", "Plank").
+    * "sets" (String): The number of sets (e.g., "3", "3-4").
+    * "reps" (String): The number of repetitions or duration (e.g., "8-12", "30 seconds", "AMRAP 15 min").
+    * "restSeconds" (Integer): Rest time in seconds between sets (e.g., 60, 90).
+    * "notes" (String, Optional): Brief additional notes or form cues for the exercise. If no notes, this can be an empty string or omitted.
+6.  Ensure the plan is appropriate for the user's experience level, goals, and available equipment.
+7.  If daysPerWeek is less than 7, intelligently incorporate rest days into the "days" array. For example, if daysPerWeek is 3, the "days" array might represent 3 workout days and 4 rest days for a 7-day cycle, or just the 3 workout days if totalWeeks implies a non-7-day cycle. Clarify this in dayLabel or summary.
+8.  Do NOT include any explanatory prose, greetings, or any text outside of the main JSON object. The response must be strictly the JSON object itself.
+9.  Prioritize safety and effectiveness. If equipment is "None", focus on bodyweight exercises.
+10. The number of items in the "days" array should logically correspond to the plan structure (e.g., for a 4-week plan with 3 workouts per week, it could be 12 day objects if each represents a workout, or 28 if it represents every day of the 4 weeks). For simplicity in this initial version, aim for the "days" array to represent the workout days for one week, and let "totalWeeks" indicate the overall duration. So, the "days" array length should match "daysPerWeek".
+
+Example for a single exercise: { "name": "Push-ups", "sets": "3", "reps": "As many as possible", "restSeconds": 60, "notes": "Keep core engaged." }
+Example for a rest day in the 'days' array: { "dayLabel": "Day 2: Rest", "summary": "Rest Day", "exercises": [] }`;
+            },
+
+            getPlanSchema: () => {
+                // This schema is based on section 4.2 PlanData and the prompt requirements
+                return {
+                    type: "OBJECT",
+                    properties: {
+                        "plan": {
+                            type: "OBJECT",
+                            properties: {
+                                "totalWeeks": { type: "INTEGER", description: "Total number of weeks the plan is designed for." },
+                                "daysPerWeek": { type: "INTEGER", description: "Number of workout days per week." },
+                                "days": {
+                                    type: "ARRAY",
+                                    description: "Array of day plans, typically for one week. Length should match daysPerWeek.",
+                                    items: {
+                                        type: "OBJECT",
+                                        properties: {
+                                            "dayLabel": { type: "STRING", description: "Label for the day, e.g., 'Day 1 - Monday: Upper Body' or 'Workout 1: Full Body'" },
+                                            "summary": { type: "STRING", description: "Summary of the day's workout or if it's a rest day." },
+                                            "exercises": {
+                                                type: "ARRAY",
+                                                description: "List of exercises for the day. Empty if it's a rest day.",
+                                                items: {
+                                                    type: "OBJECT",
+                                                    properties: {
+                                                        "name": { type: "STRING", description: "Name of the exercise." },
+                                                        "sets": { type: "STRING", description: "Number of sets, can be a range e.g., '3-4'." },
+                                                        "reps": { type: "STRING", description: "Number of reps or duration, e.g., '8-12' or '30 seconds'." },
+                                                        "restSeconds": { type: "INTEGER", description: "Rest duration in seconds between sets." },
+                                                        "notes": { type: "STRING", description: "Optional notes or tips for the exercise." }
+                                                    },
+                                                    required: ["name", "sets", "reps", "restSeconds"]
+                                                }
+                                            }
+                                        },
+                                        required: ["dayLabel", "summary", "exercises"]
+                                    }
+                                }
+                            },
+                            required: ["totalWeeks", "daysPerWeek", "days"]
+                        }
+                    },
+                    required: ["plan"]
+                };
+            },
+
+            renderPlan: (planData) => {
+                planContent.innerHTML = ''; // Clear previous plan
+
+                if (!planData || !planData.days || planData.days.length === 0) {
+                    planContent.innerHTML = '<p class="text-gray-600">No workout days found in the generated plan.</p>';
+                    return;
+                }
+
+                const planHeader = document.createElement('div');
+                planHeader.className = 'mb-4 p-4 bg-blue-50 rounded-lg border border-blue-200';
+                planHeader.innerHTML = `
+                    <p class="text-lg font-semibold text-blue-700">Plan Overview:</p>
+                    <p class="text-blue-600"><strong>Total Weeks:</strong> ${planData.totalWeeks || 'Not specified'}</p>
+                    <p class="text-blue-600"><strong>Workouts Per Week:</strong> ${planData.daysPerWeek || 'Not specified'}</p>
+                `;
+                planContent.appendChild(planHeader);
+
+
+                planData.days.forEach(day => {
+                    const dayCard = document.createElement('div');
+                    dayCard.className = 'plan-card';
+
+                    let exercisesHTML = '<p class="text-sm text-gray-500">No exercises listed for this day.</p>';
+                    if (day.exercises && day.exercises.length > 0) {
+                        exercisesHTML = '<ul class="divide-y divide-gray-200">';
+                        day.exercises.forEach(ex => {
+                            exercisesHTML += `
+                                <li class="exercise-item py-3">
+                                    <p class="font-semibold text-gray-700">${ex.name}</p>
+                                    <p class="text-sm text-gray-600">Sets: ${ex.sets}, Reps/Duration: ${ex.reps}, Rest: ${ex.restSeconds}s</p>
+                                    ${ex.notes ? `<p class="text-xs text-gray-500 mt-1"><em>Note: ${ex.notes}</em></p>` : ''}
+                                </li>`;
+                        });
+                        exercisesHTML += '</ul>';
+                    } else if (day.summary.toLowerCase().includes("rest")) {
+                         exercisesHTML = '<p class="text-sm text-green-600 font-medium">This is a designated rest day. Enjoy your recovery!</p>';
+                    }
+
+
+                    dayCard.innerHTML = `
+                        <h3 class="text-xl font-semibold text-indigo-700 border-b pb-2 mb-3">${day.dayLabel}</h3>
+                        <p class="text-md text-gray-700 mb-3"><strong>Summary:</strong> ${day.summary}</p>
+                        <h4 class="text-lg font-medium text-indigo-600">Exercises:</h4>
+                        ${exercisesHTML}
+                    `;
+                    planContent.appendChild(dayCard);
+                });
+            },
+
+            displayMessage: (message, type = "info") => { // types: error, success, loading, info
+                messageArea.innerHTML = ''; // Clear previous messages
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message-box ${type}`;
+                messageDiv.textContent = message;
+                messageArea.appendChild(messageDiv);
+            },
+
+            clearMessages: () => {
+                messageArea.innerHTML = '';
+            }
+        };
+
+        // --- Initialize Application ---
+        document.addEventListener('DOMContentLoaded', App.init);
+
+    </script>
+</body>
+</html>
